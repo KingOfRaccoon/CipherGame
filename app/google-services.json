@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "94787393794",
+    "project_id": "cipher-game",
+    "storage_bucket": "cipher-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94787393794:android:042d1725bce5d2d62e8a1b",
+        "android_client_info": {
+          "package_name": "com.badschizoids.ciphergame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94787393794-ljgbk0j540jtdfra5s0rvt0b4igvqbhr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzeyHGtze2MyioP8iVw9tWFworGCprVTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94787393794-ljgbk0j540jtdfra5s0rvt0b4igvqbhr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
