@@ -1,6 +1,8 @@
 package com.badschizoids.ciphergame
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,16 +13,20 @@ import com.badschizoids.ciphergame.ciphers.CaeserCipher
 import com.badschizoids.ciphergame.ciphers.ReverseCipher
 import com.badschizoids.ciphergame.ciphers.ViginerCipher
 import com.badschizoids.ciphergame.network.DataFireStore
+import com.badschizoids.ciphergame.tools.AlertsDialog
 import com.badschizoids.ciphergame.tools.User
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 
 class MainActionFragment : Fragment() {
+
     val generateEncryptMessage = GenerateEncryptMessage()
     val viginerCipher = ViginerCipher()
     val caeserCipher = CaeserCipher()
     val reverseCipher = ReverseCipher()
     lateinit var messageTextView : MaterialTextView
+    val historyMessage = mutableSetOf<String>()
+    var messageAnswer = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +57,26 @@ class MainActionFragment : Fragment() {
         messageTextView  = view.findViewById(R.id.message)
         User.mutableLiveData.observe(viewLifecycleOwner, Observer {
             if (it.isNotEmpty()){
-                messageTextView.text = generateEncryptMessage.generateMessage(it.random().text, 1)
+                messageAnswer = it.random().text
+                setMessage(generateEncryptMessage.generateMessage(messageAnswer, 3))
+            }
+        })
+
+        messageTextView.setOnClickListener {
+            if (historyMessage.isNotEmpty()){
+                setMessage(historyMessage.last())
+                historyMessage.remove(historyMessage.toList()[historyMessage.size-1])
+            }
+        }
+
+        messageTextView.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (messageAnswer == s.toString())
+                    AlertsDialog().createSussesAlertDialog(requireContext()).show()
             }
         })
 
@@ -68,10 +93,11 @@ class MainActionFragment : Fragment() {
         return view
     }
 
-    fun setMessage(string: String){
-        if (messageTextView.text.isNotEmpty() && messageTextView.text.isNotBlank()){
+    fun setMessage(string: String) {
+        if (messageTextView.text.isNotEmpty() && messageTextView.text.isNotBlank()) {
+            if (messageTextView.text.toString() != "TextView")
+                historyMessage.add(messageTextView.text.toString())
             messageTextView.text = string
         }
     }
-
 }
