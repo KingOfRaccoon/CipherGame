@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CipherGame</string>
+    <string name="ceaser_button">Шифр Цезаря</string>
+    <string name="byte_button">Побитовое кодирование</string>
+    <string name="viginer_button">Шифр Виженера</string>
+    <string name="reverse_button">Развертывание</string>
 </resources>
