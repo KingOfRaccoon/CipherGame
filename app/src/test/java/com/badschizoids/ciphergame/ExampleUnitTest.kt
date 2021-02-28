@@ -2,6 +2,7 @@ package com.badschizoids.ciphergame
 
 import com.badschizoids.ciphergame.ciphers.ByteCipher
 import com.badschizoids.ciphergame.ciphers.CaeserCipher
+import com.badschizoids.ciphergame.ciphers.SpinnerCipher
 import com.badschizoids.ciphergame.ciphers.ViginerCipher
 import org.junit.Test
 
@@ -44,5 +45,14 @@ class ExampleUnitTest {
         val enc = viginer.encrypt(a_viginer)
         val dec = viginer.decrypt(enc)
         assertEquals(a_viginer, dec)
+    }
+
+    @Test
+    fun test_spinner() {
+        val spinner = SpinnerCipher();
+        var text = "кусок фигни"
+        var enc = spinner.encrypt(text)
+        var dec = spinner.decrypt(enc)
+        assertEquals(text, dec)
     }
 }
