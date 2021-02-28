@@ -16,8 +16,19 @@ class ViginerCipher(var key : String = "Котлин"): EncryptAndDecrypt {
             previousAscii = char.toInt()
             val step = key[i % key.length].toLowerCase().toInt() - firstStep
             newAscii = previousAscii + step
-            if (newAscii < 223 && Character.isUpperCase(char) || newAscii < 255)
-                newAscii -= 32
+            when(previousAscii){
+                in (65..122) -> {
+                    if (newAscii > 90 && Character.isUpperCase(char) || newAscii > 122 && Character.isLowerCase(char)) {
+                        newAscii -= 26
+                    }
+                }
+                in (192..255) -> {
+                    if (newAscii > 223 && Character.isUpperCase(char) || newAscii > 255 && Character.isLowerCase(char))
+                        newAscii -= 32
+                }
+            }
+//            if (newAscii < 223 && Character.isUpperCase(char) || newAscii < 255)
+//                newAscii -= 32
             output.append(newAscii.toChar().toString())
         }
         return output.toString()
@@ -37,8 +48,25 @@ class ViginerCipher(var key : String = "Котлин"): EncryptAndDecrypt {
             previousAscii = char.toInt()
             val step = key[i % key.length].toLowerCase().toInt() - firstStep
             newAscii = previousAscii - step
-            if (newAscii < 192 && Character.isUpperCase(char) || newAscii < 224)
-                newAscii += 32
+            when(previousAscii){
+                in (65..122) -> {
+                    if (newAscii < 65 && Character.isUpperCase(char) || newAscii < 97 && Character.isLowerCase(char)) {
+                        newAscii += 26
+                    }
+                }
+//                in (97..122) -> {
+//                    if (newAscii > 65 && Character.isUpperCase(character) || newAscii > 97) {
+//                        newAscii += 26
+//                    }
+//                }
+
+                in (192..255) -> {
+                    if (newAscii < 192 && Character.isUpperCase(char) || newAscii < 224 && Character.isLowerCase(char))
+                        newAscii += 32
+                }
+            }
+//            if (newAscii < 192 && Character.isUpperCase(char) || newAscii < 224)
+//                newAscii += 32
             output.append(newAscii.toChar().toString())
         }
         return output.toString()

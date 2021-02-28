@@ -20,18 +20,18 @@ class ExampleUnitTest {
      @Test
     fun test_ceaser() {
         val ceaser = CaeserCipher()
-        var a_ceaser = "Денег нет, но вы держитесь"
-        var enc = ceaser.encrypt(a_ceaser)
-        var dec = ceaser.decrypt(enc)
+        val a_ceaser = "Денег нет, но вы держитесь"
+        val enc = ceaser.encrypt(a_ceaser)
+        val dec = ceaser.decrypt(enc)
         assertEquals(a_ceaser, dec)
     }
 
     @Test
     fun test_byte(){
         val byte = ByteCipher()
-        var a_byte = "QWERTY"
-        var enc = byte.encrypt(a_byte)
-        var dec = byte.decrypt(enc)
+        val a_byte = "QWERTY"
+        val enc = byte.encrypt(a_byte)
+        val dec = byte.decrypt(enc)
         println(enc)
         println(dec)
         assertEquals(a_byte, dec)
@@ -40,9 +40,9 @@ class ExampleUnitTest {
     @Test
     fun test_viginer(){
         val viginer = ViginerCipher()
-        var a_viginer = "Пол — это лава"
-        var enc = viginer.encrypt(a_viginer)
-        var dec = viginer.decrypt(enc)
+        val a_viginer = "Пол — это лава"
+        val enc = viginer.encrypt(a_viginer)
+        val dec = viginer.decrypt(enc)
         assertEquals(a_viginer, dec)
     }
 }
