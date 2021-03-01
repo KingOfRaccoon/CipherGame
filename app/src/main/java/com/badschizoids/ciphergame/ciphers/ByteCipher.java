@@ -2,8 +2,6 @@ package com.badschizoids.ciphergame.ciphers;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-
 public class ByteCipher implements EncryptAndDecrypt {
 
     private char ch;
