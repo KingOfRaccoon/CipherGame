@@ -1,6 +1,10 @@
 package com.badschizoids.ciphergame
 
+import android.app.Application
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceActivity
+import android.preference.PreferenceManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -8,15 +12,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.SharedPreferencesCompat
 import androidx.lifecycle.Observer
+import androidx.room.Database
 import com.badschizoids.ciphergame.ciphers.CaeserCipher
 import com.badschizoids.ciphergame.ciphers.ReverseCipher
 import com.badschizoids.ciphergame.ciphers.ViginerCipher
 import com.badschizoids.ciphergame.network.DataFireStore
-import com.badschizoids.ciphergame.tools.AlertsDialog
-import com.badschizoids.ciphergame.tools.User
+import com.badschizoids.ciphergame.saveriddle.RiddleDataBase
+import com.badschizoids.ciphergame.tools.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
+import kotlinx.coroutines.launch
 
 class MainActionFragment : Fragment() {
 
@@ -27,9 +34,12 @@ class MainActionFragment : Fragment() {
     lateinit var messageTextView : MaterialTextView
     val historyMessage = mutableSetOf<String>()
     var messageAnswer = ""
+    var count = 0
+    lateinit var database: RiddleDataBase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        database = CipherApplication().getDatabase()
         DataFireStore().getAllMemes().addOnCompleteListener {
             if (it.isSuccessful){
                 val listMemes = mutableListOf<Mem>()
@@ -48,6 +58,13 @@ class MainActionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+//        database.solvedRiddleDao().getAllHistory().observe(
+//            viewLifecycleOwner, Observer {
+//                it.forEach {
+//                    Log.e("Data", it.toString())
+//                }
+//            }
+//        )
         Log.e("Data", caeserCipher.encrypt("This is fine"))
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main_action, container, false)
@@ -75,8 +92,14 @@ class MainActionFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                if (messageAnswer == s.toString())
+                if (messageAnswer == s.toString()) {
                     AlertsDialog().createSussesAlertDialog(requireContext()).show()
+//                    launch {
+//                        database.solvedRiddleDao().addSolvedRiddleDao(
+//                            SolvedRiddle(s.toString(), count)
+//                        )
+//                    }
+                }
             }
         })
 
@@ -98,6 +121,7 @@ class MainActionFragment : Fragment() {
             if (messageTextView.text.toString() != "TextView")
                 historyMessage.add(messageTextView.text.toString())
             messageTextView.text = string
+            count++
         }
     }
 }
