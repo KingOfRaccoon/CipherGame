@@ -4,6 +4,5 @@
     <string name="byte_button">Побитовое кодирование</string>
     <string name="viginer_button">Шифр Виженера</string>
     <string name="reverse_button">Развертывание</string>
-
     <string name="title_susses">Ты смог!</string>
 </resources>

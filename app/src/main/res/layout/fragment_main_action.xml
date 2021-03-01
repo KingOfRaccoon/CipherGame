@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/teal_700"
     android:layout_height="match_parent"
     tools:context=".MainActionFragment">
 
@@ -14,54 +15,42 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginBottom="148dp"
+
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/message"
+            app:layout_constraintVertical_bias="0.705"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="0dp">
 
             <Button
-                android:id="@+id/button_caeser"
-                android:layout_width="91dp"
-                android:layout_height="71dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/teal_700"
-                android:text="@string/ceaser_button"
-                android:textColor="@color/purple_700" />
+                android:id="@+id/button_ceaser"
+                style="@style/Buttons_Text"
+                android:text="@string/ceaser_button" />
+
+            <Button
+                android:id="@+id/button_viginer"
+                style="@style/Buttons_Text"
+                android:text="@string/viginer_button" />
 
             <Button
                 android:id="@+id/button_reverse"
-                android:layout_width="91dp"
-                android:layout_height="71dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="169dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/teal_700"
-                android:text="@string/reverse_button"
-                android:textColor="@color/purple_700" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_viginer"
-                android:layout_width="91dp"
-                android:layout_height="71dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/teal_700"
-                android:text="@string/viginer_button"
-                android:textColor="@color/purple_700" />
+                style="@style/Buttons_Text"
+                android:text="@string/reverse_button" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/button5"
-            android:layout_width="146dp"
+            android:layout_width="150dp"
             android:layout_height="71dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="76dp"
-            android:backgroundTint="@color/teal_700"
+            android:layout_marginBottom="44dp"
+            android:backgroundTint="@color/btn_color"
+            android:fontFamily="sans-serif-black"
             android:text="@string/byte_button"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -71,7 +60,8 @@
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="84dp"
+            android:layout_marginTop="152dp"
+            android:fontFamily="sans-serif-black"
             android:text="TextView"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +75,7 @@
         <!--            android:orientation="horizontal" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent">-->
 
