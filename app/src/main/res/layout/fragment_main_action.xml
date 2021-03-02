@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/teal_700"
+    android:background="@android:color/darker_gray"
     android:layout_height="match_parent"
     tools:context=".MainActionFragment">
 
@@ -42,7 +42,7 @@
 
         <Button
             android:id="@+id/button5"
-            android:layout_width="150dp"
+            android:layout_width="156dp"
             android:layout_height="71dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -50,6 +50,7 @@
             android:backgroundTint="@color/btn_color"
             android:text="@string/byte_button"
             android:textColor="@color/white"
+            android:fontFamily="@font/arimo_bold_italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -60,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="152dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/oswald_bold"
             android:text="TextView"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
