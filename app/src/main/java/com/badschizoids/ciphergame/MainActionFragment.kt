@@ -22,7 +22,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import kotlinx.coroutines.launch
 
-class MainActionFragment : BaseFragment() {
+class MainActionFragment : Fragment() {
 
     lateinit var generateEncryptMessage : GenerateEncryptMessage
     val viginerCipher = ViginerCipher()
