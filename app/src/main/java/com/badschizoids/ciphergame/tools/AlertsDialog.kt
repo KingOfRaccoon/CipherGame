@@ -2,6 +2,7 @@ package com.badschizoids.ciphergame.tools
 
 import android.app.AlertDialog
 import android.content.Context
+import android.webkit.WebView
 import com.badschizoids.ciphergame.R
 
 class AlertsDialog {
@@ -19,7 +20,8 @@ class AlertsDialog {
 
     fun createCaesarAlertDialog(context: Context): AlertDialog{
         return AlertDialog.Builder(context)
-                .setTitle(context.resources.getString(R.string.caesar))
+//                .setTitle(context.resources.getString(R.string.caesar))
+                .setView(WebView(context).apply { loadUrl("file:///android_asset/Caeser.html") })
                 .create()
     }
 }

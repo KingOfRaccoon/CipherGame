@@ -22,8 +22,8 @@ class CaesarCipher(var key: Int = 3): EncryptAndDecrypt {
                         newAscii -= 26
                     }
                 }
-                in (192..255) -> {
-                    if (newAscii < 223 && Character.isUpperCase(character) || newAscii < 255)
+                in (1040..1103) -> { //1040-1071   1072-1103
+                    if (newAscii > 1071 && Character.isUpperCase(character) || newAscii > 1103)
                         newAscii -= 32
                 }
             }

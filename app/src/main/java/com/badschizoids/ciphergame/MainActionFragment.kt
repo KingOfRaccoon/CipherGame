@@ -38,8 +38,6 @@ class MainActionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 //        database = CipherApplication().getDatabase()
         if (User.mutableLiveData.value.isNullOrEmpty())
             mainActionViewModel.init()
