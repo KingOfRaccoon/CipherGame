@@ -1,15 +1,16 @@
 package com.badschizoids.ciphergame.ciphers
 
-class CaeserCipher(var key: Int = 3): EncryptAndDecrypt {
+class CaesarCipher(var key: Int = 3): EncryptAndDecrypt {
 
     override fun encrypt(string: String): String {
         val output = StringBuffer()
         var character : Char
         var previousAscii : Int
         var newAscii : Int
+        val operators = ",.?!-"
         for (i in string.indices){
             character = string[i]
-            if (character == ' ') {
+            if (character == ' ' || character in operators) {
                 output.append(character.toString())
                 continue
             }
@@ -38,9 +39,10 @@ class CaeserCipher(var key: Int = 3): EncryptAndDecrypt {
         var character : Char
         var previousAscii : Int
         var newAscii : Int
+        val operators = ",.?!-"
         for (i in string.indices){
             character = string[i]
-            if (character == ' ') {
+            if (character == ' ' || character in operators) {
                 output.append(character.toString())
                 continue
             }

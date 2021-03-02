@@ -7,9 +7,10 @@ class ViginerCipher(var key : String = "Котлин"): EncryptAndDecrypt {
         val output = StringBuffer()
         var previousAscii : Int
         var newAscii : Int
+        val operators = ",.?!-"
         for (i in string.indices){
             val char = string[i]
-            if (char == ' '){
+            if (char == ' ' || char in operators){
                 output.append(char.toString())
                 continue
             }
@@ -39,9 +40,10 @@ class ViginerCipher(var key : String = "Котлин"): EncryptAndDecrypt {
         val output = StringBuffer()
         var previousAscii: Int
         var newAscii: Int
+        val operators = ",.?!-"
         for (i in string.indices) {
             val char = string[i]
-            if (char == ' ') {
+            if (char == ' ' || char in operators) {
                 output.append(char.toString())
                 continue
             }

@@ -1,7 +1,7 @@
 package com.badschizoids.ciphergame
 
 import com.badschizoids.ciphergame.ciphers.ByteCipher
-import com.badschizoids.ciphergame.ciphers.CaeserCipher
+import com.badschizoids.ciphergame.ciphers.CaesarCipher
 import com.badschizoids.ciphergame.ciphers.SpinnerCipher
 import com.badschizoids.ciphergame.ciphers.ViginerCipher
 import org.junit.Test
@@ -20,7 +20,7 @@ class ExampleUnitTest {
     }
      @Test
     fun test_ceaser() {
-        val ceaser = CaeserCipher()
+        val ceaser = CaesarCipher()
         val a_ceaser = "Денег нет, но вы держитесь"
         val enc = ceaser.encrypt(a_ceaser)
         val dec = ceaser.decrypt(enc)

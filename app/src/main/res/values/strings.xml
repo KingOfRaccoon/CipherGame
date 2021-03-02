@@ -5,4 +5,9 @@
     <string name="viginer_button">Шифр Виженера</string>
     <string name="reverse_button">Развертывание</string>
     <string name="title_susses">Ты смог!</string>
+    <string name="chat_fragment">Переписка</string>
+    <string name="main_action_fragment">История</string>
+
+    <string name="viginer">Справка по шифру Вижинера</string>
+    <string name="caesar">Справку по шифру Цезаря</string>
 </resources>

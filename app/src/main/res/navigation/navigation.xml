@@ -9,5 +9,13 @@
         android:id="@+id/mainActionFragment"
         android:name="com.badschizoids.ciphergame.MainActionFragment"
         android:label="fragment_main_action"
-        tools:layout="@layout/fragment_main_action" />
+        tools:layout="@layout/fragment_main_action" >
+        <action
+            android:id="@+id/action_mainActionFragment_self"
+            app:destination="@id/mainActionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.badschizoids.ciphergame.ChatFragment"
+        android:label="ChatFragment" />
 </navigation>

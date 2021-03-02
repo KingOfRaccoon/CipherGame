@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/chatFragment"
+        android:icon="@drawable/chat"
+        android:title="@string/chat_fragment"/>
+    <item
+        android:id="@+id/mainActionFragment"
+        android:icon="@drawable/receipt"
+        android:title="@string/main_action_fragment"/>
+</menu>
