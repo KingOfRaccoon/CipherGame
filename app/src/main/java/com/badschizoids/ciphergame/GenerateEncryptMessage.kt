@@ -42,7 +42,13 @@ class GenerateEncryptMessage(val context: Context) {
                     }
                 }
                 is ReverseCipher ->{
-
+                    val beenThisCipher = preferences.getString(preferences_reverse, "No")
+                    if (beenThisCipher == "No"){
+                        User.helps.add(
+                            AlertsDialog().createReverseAlertDialog(context)
+                        )
+                        preferences.edit().putString(preferences_reverse, "Yes").apply()
+                    }
                 }
                 is ByteCipher ->{
 

@@ -23,4 +23,10 @@ class AlertsDialog {
                 .setView(WebView(context).apply { loadUrl("file:///android_asset/Caeser.html") })
                 .create()
     }
+
+    fun createReverseAlertDialog(context: Context): AlertDialog{
+        return AlertDialog.Builder(context)
+            .setView(WebView(context).apply { loadUrl("file:///android_asset/Reverse.html") })
+            .create()
+    }
 }
