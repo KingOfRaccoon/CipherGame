@@ -14,13 +14,12 @@ class AlertsDialog {
 
     fun createViginerAlertDialog(context: Context): AlertDialog{
         return AlertDialog.Builder(context)
-                .setTitle(context.resources.getString(R.string.viginer))
+            .setView(WebView(context).apply { loadUrl("file:///android_asset/Vishiner.html") })
                 .create()
     }
 
     fun createCaesarAlertDialog(context: Context): AlertDialog{
         return AlertDialog.Builder(context)
-//                .setTitle(context.resources.getString(R.string.caesar))
                 .setView(WebView(context).apply { loadUrl("file:///android_asset/Caeser.html") })
                 .create()
     }
