@@ -51,10 +51,22 @@ class GenerateEncryptMessage(val context: Context) {
                     }
                 }
                 is ByteCipher ->{
-
+                    val beenThisCipher = preferences.getString(preferences_byte, "No")
+                    if (beenThisCipher == "No"){
+                        User.helps.add(
+                            AlertsDialog().createByteAlertDialog(context)
+                        )
+                        preferences.edit().putString(preferences_byte, "Yes").apply()
+                    }
                 }
                 is SpinnerCipher ->{
-
+                    val beenThisCipher = preferences.getString(preferences_spinner, "No")
+                    if (beenThisCipher == "No"){
+                        User.helps.add(
+                            AlertsDialog().createSpinnerAlertDialog(context)
+                        )
+                        preferences.edit().putString(preferences_spinner, "Yes").apply()
+                    }
                 }
             }
             message = cipher.encrypt(message)

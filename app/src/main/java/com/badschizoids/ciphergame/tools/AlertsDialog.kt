@@ -29,4 +29,16 @@ class AlertsDialog {
             .setView(WebView(context).apply { loadUrl("file:///android_asset/Reverse.html") })
             .create()
     }
+
+    fun createSpinnerAlertDialog(context: Context): AlertDialog{
+        return AlertDialog.Builder(context)
+            .setView(WebView(context).apply { loadUrl("file:///android_asset/Spinner.html") })
+            .create()
+    }
+
+    fun createByteAlertDialog(context: Context): AlertDialog{
+        return AlertDialog.Builder(context)
+            .setView(WebView(context).apply { loadUrl("file:///android_asset/XOR.html") })
+            .create()
+    }
 }
