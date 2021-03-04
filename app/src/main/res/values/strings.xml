@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">CipherGame</string>
     <string name="ceaser_button">Шифр Цезаря</string>
-    <string name="byte_button">Побитовое кодирование</string>
-    <string name="viginer_button">Шифр Виженера</string>
-    <string name="reverse_button">Развертывание</string>
+    <string name="byte_button">Шифр XOR</string>
+    <string name="viginer_button">Шифр Вижинера</string>
+    <string name="reverse_button">Шифр разворота</string>
+    <string name="spinner_button">Шифр попарной замены</string>
     <string name="title_susses">Ты смог!</string>
     <string name="chat_fragment">Переписка</string>
     <string name="main_action_fragment">История</string>
