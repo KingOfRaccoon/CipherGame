@@ -50,6 +50,58 @@ class StoryTail {
         private val stringsUserSecondWork = arrayOf(
             StoryMessage("К сожалению у меня не получилось  дешифровать информацию.")
         )
+        private val stringsMentorCameBack = arrayOf(
+            StoryMessage("Только вернулся с командировки, как дела стажер?"),
+            StoryMessage("Они там что, совсем с ума посходили?!")
+        )
+        private val stringsUserAboutDismissal = arrayOf(
+            StoryMessage("Все плохо, меня отстранили от работы." +
+                    " Сегодня узнаю уволят или нет ;(")
+        )
+        private val stringsMentorCompany = arrayOf(
+            StoryMessage("Что за новости?!"),
+            StoryMessage("Назовите хотя бы 1 причину увольнения моего стажера."),
+            StoryMessage("Перешлите мне файл с этим шифром."),
+            StoryMessage("Конечно, парень не смог бы дешифровать это," +
+                    " там присутствуют шифры о которых он даже не знает." +
+                    " Вообщем, я требую восстановления парня в должности" +
+                    " или мне придется пойти на крайние меры и перейти в “Стела”," +
+                    " как раз слышал, что они набирают в свою" +
+                    " команду криптографов с большим опытом.")
+        )
+        private val stringsCompanyMentor = arrayOf(
+            StoryMessage("Александр, что случилось?"),
+            StoryMessage("Он не смог выполнить важную задачу," +
+                    " из-за его провала цена акций обрушилась на 5%."),
+            StoryMessage("Хоть это и шантаж чистой воды, но у нас нет выбора," +
+                    " вы слишком ценный актив. Стажер будет восстановлен в должности." +
+                    " Можете продолжать работу." +
+                    " И да, Александр как только освободитесь нам нужно будет побеседовать.")
+        )
+        private val stringsMentorThirdLevel = arrayOf(
+            StoryMessage("Лови еще информации о шифрах." +
+                    " Скинул бы я тебе эту информацию раньше," +
+                    " ты бы просто убил тот шифр. Также высылаю тебе еще заданий.")
+        )
+        private val stringsMentorFourthLevel = arrayOf(
+            StoryMessage("Смог расшифровать те данные, которые я тебе скидывал?"),
+            StoryMessage("Представитель скинул мне файл с информацией," +
+                    " которая поможет нам выдавить “Стеллу” с рынка," +
+                    " на ней сразу все шифры." +
+                    " Не могу с ней справиться, скину тебе, вдруг придет вдохновение."),
+            StoryMessage("Отправляю специальную утилиту для XOR," +
+                    " с её помощью ты сможешь дешифровать строку."),
+            StoryMessage("Решил?"),
+            StoryMessage("Это или шаг к шифру Цезаря или" +
+                    " слово к Виженеру, ты понял к чему?"),
+            StoryMessage("Прекрасно, приступай к дешифровке.")
+        )
+        private val stringsUserFourthLevel = arrayOf(
+            StoryMessage("Да, дешифровка прошла успешно."),
+            StoryMessage("Там XOR, не могу дешифровать."),
+            StoryMessage("Александр, я дешифровал сообщение, там какая-то загадка."),
+            StoryMessage("Ну, типа.")
+        )
         val startComapny = "startCompany"
         val getHelpsCompany = "getHelpsCompany"
         val firstWorkCompany = "firstWorkCompany"
