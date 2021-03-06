@@ -24,7 +24,7 @@ class HelpFragment: Fragment() {
                 if (it) {
                     helpMessageAdapter.strings = mutableListOf(
                             HelpMessage("Шифр Цезаря", "file:///android_asset/Caeser.html"),
-                            HelpMessage("Шифр Вижинера", "file:///android_asset/Vishiner.html")
+                            HelpMessage("Шифр Виженера", "file:///android_asset/Vishiner.html")
                     )
                     recyclerView.adapter = helpMessageAdapter
                     preferences.edit().putBoolean("helps", true).apply()
@@ -35,7 +35,7 @@ class HelpFragment: Fragment() {
 
             helpMessageAdapter.strings = mutableListOf(
                     HelpMessage("Шифр Цезаря", "file:///android_asset/Caeser.html"),
-                    HelpMessage("Шифр Вижинера", "file:///android_asset/Vishiner.html")
+                    HelpMessage("Шифр Виженера", "file:///android_asset/Vishiner.html")
             )
             recyclerView.adapter = helpMessageAdapter
         }
@@ -46,7 +46,7 @@ class HelpFragment: Fragment() {
     companion object{
         val helpMessages = mutableListOf(
                 HelpMessage("Шифр Цезаря", "file:///android_asset/Caeser.html"),
-                HelpMessage("Шифр Вижинера", "file:///android_asset/Vishiner.html")
+                HelpMessage("Шифр Виженера", "file:///android_asset/Vishiner.html")
         )
         val error = "Вы не просмотрели справки"
     }
