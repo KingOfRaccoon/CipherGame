@@ -25,16 +25,20 @@
             tools:layout_editor_absoluteX="0dp">
 
             <Button
+
+                android:layout_weight="1"
                 android:id="@+id/button_ceaser"
                 style="@style/Buttons_Text"
                 android:text="@string/ceaser_button" />
 
             <Button
+                android:layout_weight="1"
                 android:id="@+id/button_viginer"
                 style="@style/Buttons_Text"
                 android:text="@string/viginer_button" />
 
             <Button
+                android:layout_weight="1"
                 android:id="@+id/button_reverse"
                 style="@style/Buttons_Text"
                 android:text="@string/reverse_button" />

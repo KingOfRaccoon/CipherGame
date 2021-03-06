@@ -22,4 +22,5 @@ class MainActionViewModel: ViewModel() {
                 Log.e("Data", it.exception?.message.toString())
         }
     }
+    val haveThisMemes = mutableListOf<Mem>()
 }

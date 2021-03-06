@@ -1,29 +1,32 @@
-package com.badschizoids.ciphergame
+package com.badschizoids.ciphergame.chat
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.badschizoids.ciphergame.GenerateEncryptMessage
+import com.badschizoids.ciphergame.MainActivity
+import com.badschizoids.ciphergame.R
 import com.badschizoids.ciphergame.ciphers.CaesarCipher
 import com.badschizoids.ciphergame.ciphers.ReverseCipher
 import com.badschizoids.ciphergame.ciphers.ViginerCipher
-import com.badschizoids.ciphergame.network.DataFireStore
-import com.badschizoids.ciphergame.saveriddle.RiddleDataBase
-import com.badschizoids.ciphergame.tools.*
+import com.badschizoids.ciphergame.tools.AlertsDialog
+import com.badschizoids.ciphergame.tools.User
 import com.badschizoids.ciphergame.ui.mainaction.MainActionViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
-import kotlinx.coroutines.launch
+import java.util.prefs.Preferences
 
-class MainActionFragment : Fragment() {
-
+class ChatActionFragment: Fragment() {
     lateinit var generateEncryptMessage : GenerateEncryptMessage
     val viginerCipher = ViginerCipher()
     val caeserCipher = CaesarCipher()
@@ -34,45 +37,36 @@ class MainActionFragment : Fragment() {
     val mainActionViewModel: MainActionViewModel by lazy {
         ViewModelProvider(this).get(MainActionViewModel::class.java)
     }
-    lateinit var database: RiddleDataBase
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        database = CipherApplication().getDatabase()
-        if (User.mutableLiveData.value.isNullOrEmpty())
-            mainActionViewModel.init()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_chat_action, container, false)
+        mainActionViewModel.init()
         generateEncryptMessage = GenerateEncryptMessage(requireContext())
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-//        database.solvedRiddleDao().getAllHistory().observe(
-//            viewLifecycleOwner, Observer {
-//                it.forEach {
-//                    Log.e("Data", it.toString())
-//                }
-//            }
-//        )
-        val view = inflater.inflate(R.layout.fragment_main_action, container, false)
+        (requireActivity() as MainActivity).toWork()
         val decryptViginerButton : MaterialButton = view.findViewById(R.id.button_viginer)
         val decryptCaeserButton : MaterialButton = view.findViewById(R.id.button_ceaser)
         val decryptReverseButton : MaterialButton = view.findViewById(R.id.button_reverse)
         messageTextView = view.findViewById(R.id.message)
-        User.mutableLiveData.observe(viewLifecycleOwner, Observer {
-            if (it.isNotEmpty()){
-                if (mainActionViewModel.messageAnswer == "")
-                    mainActionViewModel.messageAnswer = it.random().text
-                setMessage(generateEncryptMessage
-                        .generateMessage(mainActionViewModel.messageAnswer, 1))
-                User.helps.forEach {
-                    it.show()
+        User.mutableLiveData.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                if (User.haveThisMemes.size != it.size) {
+                    val mem = (it - User.haveThisMemes.toList()).random()
+                    if (!User.haveThisMemes.contains(mem)) {
+                        if (mainActionViewModel.messageAnswer == "") {
+                            mainActionViewModel.messageAnswer = mem.text
+                            User.haveThisMemes.add(mem)
+                        }
+                        setMessage(generateEncryptMessage
+                                .generateMessage(mainActionViewModel.messageAnswer, 1))
+                        User.helps.forEach {
+                            it.show()
+                        }
+                        User.helps.clear()
+                    }
                 }
-                User.helps.clear()
             }
-        })
+        }
 
         messageTextView.setOnClickListener {
             if (historyMessage.isNotEmpty()){
@@ -81,7 +75,7 @@ class MainActionFragment : Fragment() {
             }
         }
 
-        messageTextView.addTextChangedListener(object :TextWatcher{
+        messageTextView.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -89,12 +83,7 @@ class MainActionFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 if (mainActionViewModel.messageAnswer == s.toString()) {
                     AlertsDialog().createSussesAlertDialog(requireContext()).show()
-                    mainActionViewModel.messageAnswer = ""
-//                    launch {
-//                        database.solvedRiddleDao().addSolvedRiddleDao(
-//                            SolvedRiddle(s.toString(), count)
-//                        )
-//                    }
+                    findNavController().navigate(R.id.action_chatActionFragment_self)
                 }
             }
         })
@@ -111,7 +100,6 @@ class MainActionFragment : Fragment() {
 
         return view
     }
-
     fun setMessage(string: String) {
         if (messageTextView.text.isNotEmpty() && messageTextView.text.isNotBlank()) {
             if (messageTextView.text.toString() != "TextView")
@@ -121,9 +109,4 @@ class MainActionFragment : Fragment() {
         }
     }
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-    }
 }

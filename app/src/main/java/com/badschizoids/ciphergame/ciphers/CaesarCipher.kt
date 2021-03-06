@@ -60,9 +60,11 @@ class CaesarCipher(var key: Int = 3): EncryptAndDecrypt {
 //                    }
 //                }
 
-                in (192..255) -> {
-                    if (newAscii < 192 && Character.isUpperCase(character) || newAscii < 224)
+                in (1040..1103) -> { //1040-1071   1072-1103
+                    if (newAscii < 1040 && Character.isUpperCase(character)
+                            || newAscii < 1072 && Character.isLowerCase(character)) {
                         newAscii += 32
+                    }
                 }
             }
 //            if (newAscii < 192 && Character.isUpperCase(character) || newAscii < 224)

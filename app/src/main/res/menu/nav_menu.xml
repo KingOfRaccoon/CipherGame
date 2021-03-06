@@ -8,4 +8,10 @@
         android:id="@+id/mainActionFragment"
         android:icon="@drawable/receipt"
         android:title="@string/main_action_fragment"/>
+    <item
+        android:id="@+id/helpFragment"
+        android:icon="@drawable/help"
+        android:title="@string/help"
+        />
+
 </menu>

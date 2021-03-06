@@ -5,7 +5,10 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.WebView
+import androidx.core.view.forEach
+import androidx.core.view.get
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         navView = findViewById(R.id.navView)
         val appBarConfiguration = AppBarConfiguration(
                 setOf(
-                        R.id.mainActionFragment, R.id.chatFragment
+                        R.id.mainActionFragment, R.id.chatFragment, R.id.helpFragment
                 )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -34,18 +37,22 @@ class MainActivity : AppCompatActivity() {
 
         if (checkSelfPermission(Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) // проверка на наличие разрешений
             requestPermissions(arrayOf(Manifest.permission.INTERNET), 101)
-        DataFireStore().getAllMemes().addOnCompleteListener {
-            if (it.isSuccessful){
-                val list = it.result?.get("mem") as List<String>
-                list.forEach {
-                    Log.e("Test", it)
-                }
-            }
-            else
-                Log.e("Data", it.exception?.message.toString())
-        }
     }
 
+    fun newHelp(){
+//        navView.menu.forEach {
+//            if (it.itemId == R.id.helpFragment)
+//                it.icon = resources.getDrawable(R.drawable.)
+//        }
+    }
+
+    fun toWork(){
+        navView.visibility = View.GONE
+    }
+
+    fun exitWork(){
+        navView.visibility = View.VISIBLE
+    }
 
     override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
 }
