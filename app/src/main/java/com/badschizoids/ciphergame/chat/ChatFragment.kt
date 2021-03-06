@@ -9,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.badschizoids.ciphergame.HelpFragment
 import com.badschizoids.ciphergame.MainActivity
@@ -32,23 +34,32 @@ class ChatFragment: BaseFragment() {
     var name = StoryTail.nameCompanyStart
     var position = -1
     var chat = Chat(Chat.nameStart, stringUser!!, stringCompany!!)
+    val viewModel by viewModels<ChatViewModel>()
+    var haveSave = false
+    var pairData : Pair<String, String> = "" to ""
 
     lateinit var preferences : SharedPreferences
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val nameChat = preferences.getString(nameChat, null)
         val lastMessage = preferences.getString(lastMessage, null)
         if (nameChat != null && lastMessage != null){
-//            messageAdapter = MessageAdapter(requireContext())
+            haveSave = true
+            pairData = nameChat to lastMessage
         }
+        Log.e("data", nameChat.toString())
+        Log.e("data", lastMessage.toString())
+//        Log.e("data", viewModel.position.toString())
+//        viewModel.position = 3
+//        Log.e("data", viewModel.position.toString())
     }
 
     override fun onCreateView(inflater: LayoutInflater,
                   container: ViewGroup?, savedInstanceState: Bundle?): View? {
         (requireActivity() as MainActivity).exitWork()
         Log.e("data", arguments.toString())
-        if (arguments != null) {
+        if (arguments != null && false  ) {
             val companyName = arguments?.getString(nameCompanyTag)
             val chatName = arguments?.getString(nameTag)
             val arrayUser = StoryTail.stringsUser[arguments?.getString(stringsUserTag)]
@@ -62,7 +73,8 @@ class ChatFragment: BaseFragment() {
         }
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
         messagesView = view.findViewById(R.id.messages_view)
-
+        if (haveSave)
+            goToLastMessage(pairData.first, pairData.second)
 //        messageAdapter = MessageAdapter(requireContext())
         val mutableLiveData = MutableLiveData(messageAdapter)
         val dataCompany = MemberData(name, getRandomColor())
@@ -99,10 +111,14 @@ class ChatFragment: BaseFragment() {
         messagesView.adapter = MessageAdapter(requireContext())
         messagesView.setSelection(messagesView.count - 1)
 
-        mutableLiveData.observe(viewLifecycleOwner) {
+        mutableLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer{
             var position = -1
-            if (!it.isEmpty)
+            if (!it.isEmpty) {
+                Log.e("data", chat.name)
+                Log.e("data", chat.stringsUser.toString())
+                Log.e("data", chat.stringsCompany.toString())
                 position = chat.getPositionInUserString(it.messages.last().text)
+            }
             launch {
                 delay(1000)
                 if (position + 1 < chat.stringsCompany.size) {
@@ -123,7 +139,7 @@ class ChatFragment: BaseFragment() {
                     messagesView.setSelection(messagesView.count - 1)
                 }
             }
-        }
+        })
 
         return view
     }
@@ -156,12 +172,14 @@ class ChatFragment: BaseFragment() {
                     Toast.makeText(requireContext(), HelpFragment.error, Toast.LENGTH_LONG).show()
             }
         }
-//        if (error == ""){
-//
-//        }
-//        Log.e("data", bundle.toString())
         if (!bundle.isEmpty)
             findNavController().navigate(R.id.action_chatFragment_self, bundle)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        preferences.edit().putString(nameChat, chat.name).apply()
+        preferences.edit().putString(lastMessage, messageAdapter.messages.last().text).apply()
     }
 
     companion object{
@@ -172,5 +190,38 @@ class ChatFragment: BaseFragment() {
         val nameChat = "nameChat"
         val lastMessage = "lastMessage"
     }
-//    fun goToLastMessage
+    fun goToLastMessage(chatName: String, lastMessage: String){
+        var nameCompany = ""
+        when (chatName) {
+            Chat.nameStart -> {
+                chat = Chat(Chat.nameStart, StoryTail.stringsUser[StoryTail.startUser]!!,
+                        StoryTail.stringsCompany[StoryTail.startComapny]!!)
+                nameCompany = StoryTail.nameCompanyGetHelpsAndFirstWork
+            }
+            Chat.nameGetHelps -> {
+
+            }
+        }
+        for (index in chat.stringsUser.indices){
+            val messageUser = chat.stringsUser[index]
+            val messageCompany = chat.stringsCompany[index]
+            messageAdapter.messages.add(
+                    Message(messageCompany,
+                            MemberData(nameCompany, getRandomColor()),
+                            false
+                    )
+            )
+            messageAdapter.messages.add(
+                    Message(messageUser,
+                            MemberData("Игрок", getRandomColor()),
+                            true
+                    )
+            )
+
+            if (lastMessage == chat.stringsUser[index].message
+                    || lastMessage == chat.stringsCompany[index].message)
+                        break
+        }
+        messagesView.adapter = messageAdapter
+    }
 }

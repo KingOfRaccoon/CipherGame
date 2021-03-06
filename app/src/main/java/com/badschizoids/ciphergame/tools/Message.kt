@@ -8,4 +8,6 @@ class Message(// message body
         var belongsToCurrentUser: Boolean,// is this message sent by us?
         var needWork: Boolean = false
 ) {
+    constructor(message: StoryMessage, memberData: MemberData, belongsToCurrentUser: Boolean)
+            :this(message.message, memberData, belongsToCurrentUser, message.needWork)
 }

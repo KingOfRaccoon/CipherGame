@@ -1,6 +1,6 @@
 package com.badschizoids.ciphergame.tools
 
-class StoryMessage(
+data class StoryMessage(
         val message: String,
         val needWork : Boolean = false
 )
