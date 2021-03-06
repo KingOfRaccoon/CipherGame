@@ -37,6 +37,19 @@ class StoryTail {
                 StoryMessage("Ничего интересного, там лишь мемы :("),
                 StoryMessage("Будто бы у меня есть выбор :)")
         )
+        private val stringsCompanySecondWork = arrayOf(
+            StoryMessage("Есть задание от которого очень " +
+                    " сильно зависит цена акций нашей компании." +
+                    " Т.к. Александер в командировке, задание" +
+                    " придется отдать стажеру." +
+                    " Файл будет выслан через несколько секунд."),
+            StoryMessage("Руководство не довольно вашим результатом." +
+                    " Вы отстраняетесь от работы на 2 ближайших месяца" +
+                    " также будет поднят вопрос о вашем увольнении.")
+        )
+        private val stringsUserSecondWork = arrayOf(
+            StoryMessage("К сожалению у меня не получилось  дешифровать информацию."),
+        )
         val startComapny = "startCompany"
         val getHelpsCompany = "getHelpsCompany"
         val firstWorkCompany = "firstWorkCompany"
