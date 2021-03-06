@@ -48,7 +48,7 @@ class StoryTail {
                     " также будет поднят вопрос о вашем увольнении.")
         )
         private val stringsUserSecondWork = arrayOf(
-            StoryMessage("К сожалению у меня не получилось  дешифровать информацию."),
+            StoryMessage("К сожалению у меня не получилось  дешифровать информацию.")
         )
         val startComapny = "startCompany"
         val getHelpsCompany = "getHelpsCompany"
