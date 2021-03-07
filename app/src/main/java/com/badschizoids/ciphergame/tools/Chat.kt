@@ -7,7 +7,7 @@ class Chat(
 ){
     fun getPositionInUserString(string: String): Int {
         var position = -1
-        for (i in string.indices){
+        for (i in stringsUser.indices){
             if (stringsUser[i].message == string){
                 position = i
                 break

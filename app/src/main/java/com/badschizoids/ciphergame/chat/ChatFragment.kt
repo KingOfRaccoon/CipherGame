@@ -34,21 +34,27 @@ class ChatFragment: BaseFragment() {
     var chat = Chat(Chat.nameStart, stringUser!!, stringCompany!!)
 
     lateinit var preferences : SharedPreferences
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val nameChat = preferences.getString(nameChat, null)
-        val lastMessage = preferences.getString(lastMessage, null)
-        if (nameChat != null && lastMessage != null){
+//        val nameChat = preferences.getString(nameChat, null)
+//        val lastMessage = preferences.getString(lastMessage, null)
+//        if (nameChat != null && lastMessage != null){
 //            messageAdapter = MessageAdapter(requireContext())
+//        }
+        if (User.notNewFrame){
+            chat = User.chat
+            messageAdapter.messages = User.messages
+            User.notNewFrame = false
         }
+        User.notNewFrame = true
     }
 
     override fun onCreateView(inflater: LayoutInflater,
                   container: ViewGroup?, savedInstanceState: Bundle?): View? {
         (requireActivity() as MainActivity).exitWork()
         Log.e("data", arguments.toString())
-        if (arguments != null) {
+        if (arguments != null && User.notNewFrame) {
             val companyName = arguments?.getString(nameCompanyTag)
             val chatName = arguments?.getString(nameTag)
             val arrayUser = StoryTail.stringsUser[arguments?.getString(stringsUserTag)]
@@ -67,6 +73,8 @@ class ChatFragment: BaseFragment() {
         val mutableLiveData = MutableLiveData(messageAdapter)
         val dataCompany = MemberData(name, getRandomColor())
         val button = view.findViewById<MaterialButton>(R.id.send)
+        if (User.notNewFrame)
+            position = getLastPositionUser()
         if (position+1 < chat.stringsUser.size)
             button.text = chat.stringsUser[position+1].message
         else
@@ -99,13 +107,13 @@ class ChatFragment: BaseFragment() {
             else
                 nextChat(chat.name)
         }
-        messagesView.adapter = MessageAdapter(requireContext())
+        messagesView.adapter = messageAdapter
         messagesView.setSelection(messagesView.count - 1)
 
         mutableLiveData.observe(viewLifecycleOwner) {
             var position = -1
             if (!it.isEmpty)
-                position = chat.getPositionInUserString(it.messages.last().text)
+                position = (messageAdapter.messages.size-1)/2
             launch {
                 delay(1000)
                 if (position + 1 < chat.stringsCompany.size) {
@@ -201,8 +209,17 @@ class ChatFragment: BaseFragment() {
 //
 //        }
 //        Log.e("data", bundle.toString())
+        User.notNewFrame = false
         if (!bundle.isEmpty)
             findNavController().navigate(R.id.action_chatFragment_self, bundle)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (User.notNewFrame) {
+            User.chat = chat
+            User.messages = messageAdapter.messages
+        }
     }
 
     companion object{
@@ -214,4 +231,14 @@ class ChatFragment: BaseFragment() {
         val lastMessage = "lastMessage"
     }
 //    fun goToLastMessage
+    fun getLastPositionUser(): Int {
+        var position = -1
+        for (i in messageAdapter.messages.size-1 downTo 0 step 1){
+            if (messageAdapter.messages[i].memberData.name == "Игрок") {
+                position = i
+                break
+            }
+        }
+    return position
+    }
 }
