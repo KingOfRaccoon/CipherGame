@@ -2,7 +2,7 @@
     <string name="app_name">CipherGame</string>
     <string name="ceaser_button">Шифр\nЦезаря</string>
     <string name="byte_button">Шифр\nXOR</string>
-    <string name="viginer_button">Шифр\nВижинера</string>
+    <string name="viginer_button">Шифр\nВиженера</string>
     <string name="reverse_button">Шифр\nразворота</string>
     <string name="spinner_button">Шифр\nпопарной\nзамены</string>
     <string name="title_susses">Ты смог!</string>
