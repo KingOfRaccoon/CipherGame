@@ -8,24 +8,24 @@
     <ImageView
         android:id="@+id/image_conf"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="250dp"
         android:scaleType="fitStart"
-        android:src="@drawable/confrontation"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+        android:src="@drawable/ic_gotovoe"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/image_conf"
+        android:layout_margin="15dp"
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Конкурирующая компания «Стела» отказала
-         корпорации «Индекс» в контракте по передаче
-         данных посередине сделки. Данные были переданы,
-         но на них наложен шифр.
-         Как ни странно, «Индекс» резко начал нанимать шифровальщиков,
-          не сильно заботясь о качестве, и вам удалось проскочить
-           на стажировку."
         tools:ignore="MissingConstraints" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next"
+        android:text="Перейти далее"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

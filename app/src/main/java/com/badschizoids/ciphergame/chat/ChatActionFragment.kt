@@ -21,6 +21,7 @@ import com.badschizoids.ciphergame.ciphers.ReverseCipher
 import com.badschizoids.ciphergame.ciphers.ViginerCipher
 import com.badschizoids.ciphergame.tools.AlertsDialog
 import com.badschizoids.ciphergame.tools.BaseFragment
+import com.badschizoids.ciphergame.tools.Level
 import com.badschizoids.ciphergame.tools.User
 import com.badschizoids.ciphergame.ui.mainaction.MainActionViewModel
 import com.google.android.material.button.MaterialButton
@@ -40,36 +41,56 @@ class ChatActionFragment: BaseFragment() {
     val mainActionViewModel: MainActionViewModel by lazy {
         ViewModelProvider(this).get(MainActionViewModel::class.java)
     }
+    var level = Level.NO
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (arguments != null){
+            when(arguments?.getString("level")){
+                Level.NO.name -> level = Level.NO
+                Level.FIRST.name -> level = Level.FIRST
+                Level.SECOND.name -> level = Level.SECOND
+                Level.THIRD.name -> level = Level.THIRD
+                Level.FOURTH.name -> level = Level.FOURTH
+                else -> level = Level.NO
+            }
+        }
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chat_action, container, false)
-        mainActionViewModel.init()
-        generateEncryptMessage = GenerateEncryptMessage(requireContext())
         (requireActivity() as MainActivity).toWork()
         val decryptViginerButton : MaterialButton = view.findViewById(R.id.button_viginer)
         val decryptCaeserButton : MaterialButton = view.findViewById(R.id.button_ceaser)
         val decryptReverseButton : MaterialButton = view.findViewById(R.id.button_reverse)
-        messageTextView = view.findViewById(R.id.message)
-        User.mutableLiveData.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                if (User.haveThisMemes.size != it.size) {
-                    val mem = (it - User.haveThisMemes.toList()).random()
-                    if (!User.haveThisMemes.contains(mem)) {
-                        if (mainActionViewModel.messageAnswer == "") {
-                            mainActionViewModel.messageAnswer = mem.text
-                            User.haveThisMemes.add(mem)
+        when(level){
+            Level.FIRST ->{
+                mainActionViewModel.init()
+                generateEncryptMessage = GenerateEncryptMessage(requireContext())
+                messageTextView = view.findViewById(R.id.message)
+                User.mutableLiveData.observe(viewLifecycleOwner) {
+                    if (it.isNotEmpty()) {
+                        if (User.haveThisMemes.size != it.size) {
+                            val mem = (it - User.haveThisMemes.toList()).random()
+                            if (!User.haveThisMemes.contains(mem)) {
+                                if (mainActionViewModel.messageAnswer == "") {
+                                    mainActionViewModel.messageAnswer = mem.text
+                                    User.haveThisMemes.add(mem)
+                                }
+                                setMessage(generateEncryptMessage
+                                    .generateMessage(mainActionViewModel.messageAnswer, 1))
+                                User.helps.forEach {
+                                    it.show()
+                                }
+                                User.helps.clear()
+                            }
                         }
-                        setMessage(generateEncryptMessage
-                                .generateMessage(mainActionViewModel.messageAnswer, 1))
-                        User.helps.forEach {
-                            it.show()
-                        }
-                        User.helps.clear()
                     }
                 }
             }
         }
+
 
         messageTextView.setOnClickListener {
             if (historyMessage.isNotEmpty()){

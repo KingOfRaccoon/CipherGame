@@ -54,5 +54,12 @@ class MainActivity : AppCompatActivity() {
         navView.visibility = View.VISIBLE
     }
 
+    fun setNewTitle(title : String) {
+        setTitle(title)
+    }
+    fun setNewTitle(title : Int) {
+        setTitle(title)
+    }
+
     override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
 }

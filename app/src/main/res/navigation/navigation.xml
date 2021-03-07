@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/mainActionFragment"
         android:name="com.badschizoids.ciphergame.MainActionFragment"
-        android:label="fragment_main_action"
         tools:layout="@layout/fragment_main_action" >
         <action
             android:id="@+id/action_mainActionFragment_self"
@@ -16,8 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.badschizoids.ciphergame.chat.ChatFragment"
-        android:label="ChatFragment" >
+        android:name="com.badschizoids.ciphergame.chat.ChatFragment">
         <action
             android:id="@+id/action_chatFragment_self"
             app:destination="@id/chatFragment" />
@@ -27,12 +25,10 @@
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
-        android:name="com.badschizoids.ciphergame.HelpFragment"
-        android:label="HelpFragment" />
+        android:name="com.badschizoids.ciphergame.HelpFragment" />
     <fragment
         android:id="@+id/chatActionFragment"
-        android:name="com.badschizoids.ciphergame.chat.ChatActionFragment"
-        android:label="ChatActionFragment" >
+        android:name="com.badschizoids.ciphergame.chat.ChatActionFragment">
         <action
             android:id="@+id/action_chatActionFragment_self"
             app:destination="@id/chatActionFragment" />

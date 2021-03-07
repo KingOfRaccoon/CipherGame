@@ -3,6 +3,7 @@ package com.badschizoids.ciphergame.tools
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,7 +54,10 @@ class MessageAdapter(var context: Context) : BaseAdapter() {
                 view = messageInflater.inflate(R.layout.their_message_work, null)
                 val button : MaterialButton = view.findViewById(R.id.nextWork)
                 button.setOnClickListener{
-                    it.findNavController().navigate(R.id.action_chatFragment_to_chatActionFragment)
+                    val bundle = Bundle()
+                    bundle.putString("level", message.level.name)
+                    it.findNavController()
+                        .navigate(R.id.action_chatFragment_to_chatActionFragment, bundle)
                 }
             }
             else

@@ -67,6 +67,7 @@ class ChatFragment: BaseFragment() {
                 name = companyName
             }
         }
+        (requireActivity() as MainActivity).setNewTitle(chat.name)
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
         messagesView = view.findViewById(R.id.messages_view)
 
@@ -121,10 +122,9 @@ class ChatFragment: BaseFragment() {
                     if (position + 1 < chat.stringsCompany.size) {
                         messageAdapter.messages.add(
                                 Message(
-                                        chat.stringsCompany[position + 1].message,
+                                        chat.stringsCompany[position + 1],
                                         dataCompany,
                                         false,
-                                        chat.stringsCompany[position + 1].needWork
                                 )
                         )
                         if (chat.stringsCompany[position + 1]
