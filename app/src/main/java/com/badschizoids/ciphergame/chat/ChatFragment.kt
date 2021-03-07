@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.badschizoids.ciphergame.HelpFragment
 import com.badschizoids.ciphergame.MainActivity
@@ -73,7 +74,7 @@ class ChatFragment: BaseFragment() {
         val mutableLiveData = MutableLiveData(messageAdapter)
         val dataCompany = MemberData(name, getRandomColor())
         val button = view.findViewById<MaterialButton>(R.id.send)
-        if (User.notNewFrame)
+        if (User.notNewFrame && messageAdapter.messages.isNotEmpty())
             position = getLastPositionUser()
         if (position+1 < chat.stringsUser.size)
             button.text = chat.stringsUser[position+1].message
@@ -110,31 +111,33 @@ class ChatFragment: BaseFragment() {
         messagesView.adapter = messageAdapter
         messagesView.setSelection(messagesView.count - 1)
 
-        mutableLiveData.observe(viewLifecycleOwner) {
+        mutableLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer{
             var position = -1
             if (!it.isEmpty)
-                position = getLastPositionUser()-1
-            launch {
-                delay(1000)
-                if (position + 1 < chat.stringsCompany.size) {
-                    messageAdapter.messages.add(
-                            Message(
-                                    chat.stringsCompany[position + 1].message,
-                                    dataCompany,
-                                    false,
-                                    chat.stringsCompany[position + 1].needWork
-                            )
-                    )
-                    if (chat.stringsCompany[position+1]
-                            == StoryTail.stringsCompany[StoryTail.getHelpsCompany]?.get(1)) {
-                        (requireActivity() as MainActivity).newHelp()
-                        User.setHelpMessages.postValue(true)
+                position = getLastPositionUser()
+            if (it.isEmpty || checkUserMessage()) {
+                launch {
+                    delay(1000)
+                    if (position + 1 < chat.stringsCompany.size) {
+                        messageAdapter.messages.add(
+                                Message(
+                                        chat.stringsCompany[position + 1].message,
+                                        dataCompany,
+                                        false,
+                                        chat.stringsCompany[position + 1].needWork
+                                )
+                        )
+                        if (chat.stringsCompany[position + 1]
+                                == StoryTail.stringsCompany[StoryTail.getHelpsCompany]?.get(1)) {
+                            (requireActivity() as MainActivity).newHelp()
+                            User.setHelpMessages.postValue(true)
+                        }
+                        messagesView.adapter = messageAdapter
+                        messagesView.setSelection(messagesView.count - 1)
                     }
-                    messagesView.adapter = messageAdapter
-                    messagesView.setSelection(messagesView.count - 1)
                 }
             }
-        }
+        })
 
         return view
     }
@@ -239,7 +242,7 @@ class ChatFragment: BaseFragment() {
                 break
             }
         }
-    return position
+    return position/2
     }
 
     fun getLastPositionCompany():Int{
@@ -252,4 +255,6 @@ class ChatFragment: BaseFragment() {
         }
         return position
     }
+
+    fun checkUserMessage() = messageAdapter.messages.last().memberData.name == "Игрок"
 }
