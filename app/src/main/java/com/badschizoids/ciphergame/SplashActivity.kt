@@ -1,6 +1,7 @@
 package com.badschizoids.ciphergame
 
 import android.content.Intent
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -40,8 +41,10 @@ class SplashActivity : AppCompatActivity() {
                 counter++
             }
         }
+        val mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.sound1)
         button.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+            mediaPlayer.start()
         }
     }
 }
