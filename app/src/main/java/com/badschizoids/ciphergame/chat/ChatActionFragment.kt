@@ -55,6 +55,7 @@ class ChatActionFragment: BaseFragment() {
             mutableLiveData.postValue(true)
         }
     }
+    val last = "За столько секунд кровь совершает полный оборот в организме и столько ударов нанесли Цезарю. Назовите ответ."
 
     val timerThird = object: CountDownTimer(20000, 100){
         override fun onTick(millisUntilFinished: Long) {
@@ -168,7 +169,21 @@ class ChatActionFragment: BaseFragment() {
                 }
             }
             Level.FOURTH ->{
-//                val ciphers = arrayOf(ReverseCipher(), )
+                val ciphers = arrayOf(ReverseCipher(), SpinnerCipher(), ByteCipher())
+                setButtonInActive(decryptViginerButton)
+                setButtonInActive(decryptCaeserButton)
+                setButtonInActive(decryptXorButton)
+                setMessage(generateMessage(last, ciphers))
+                timer.start()
+                mutableLiveData.observe(viewLifecycleOwner, Observer {
+                    if (it){
+                        AlertsDialog().createLoseAlertDialog(requireContext()).show()
+                        launch {
+                            delay(500)
+                            findNavController().navigate(R.id.action_chatActionFragment_to_chatFragment)
+                        }
+                    }
+                })
             }
         }
 
@@ -219,6 +234,16 @@ class ChatActionFragment: BaseFragment() {
                                     findNavController()
                                             .navigate(R.id.action_chatActionFragment_self, bundle)
                                 }
+                            }
+                        }
+                    }
+                    Level.FOURTH ->{
+                        if (last.equals(s.toString(), true)){
+                            launch {
+                                delay(1000)
+                                AlertsDialog().createSussesAlertDialog(requireContext()).show()
+                                findNavController()
+                                        .navigate(R.id.action_chatActionFragment_to_chatFragment)
                             }
                         }
                     }
