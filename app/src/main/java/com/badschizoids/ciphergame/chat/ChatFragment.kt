@@ -46,6 +46,7 @@ class ChatFragment: BaseFragment() {
         if (User.notNewFrame){
             chat = User.chat
             messageAdapter.messages = User.messages
+            name = User.nameCompany
             User.notNewFrame = false
         }
         User.notNewFrame = true
@@ -75,8 +76,12 @@ class ChatFragment: BaseFragment() {
         val mutableLiveData = MutableLiveData(messageAdapter)
         val dataCompany = MemberData(name, getRandomColor())
         val button = view.findViewById<MaterialButton>(R.id.send)
-        if (User.notNewFrame && messageAdapter.messages.isNotEmpty())
-            position = getLastPositionUser()
+        if (User.notNewFrame && messageAdapter.messages.isNotEmpty()) {
+            if (messageAdapter.messages.size == 1)
+                position = -1
+            else
+                position = getLastPositionUser()
+        }
         if (position+1 < chat.stringsUser.size)
             button.text = chat.stringsUser[position+1].message
         else
@@ -218,6 +223,7 @@ class ChatFragment: BaseFragment() {
         if (User.notNewFrame) {
             User.chat = chat
             User.messages = messageAdapter.messages
+            User.nameCompany = name
         }
     }
 

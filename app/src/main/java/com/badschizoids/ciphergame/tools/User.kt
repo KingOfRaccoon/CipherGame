@@ -27,8 +27,15 @@ object User {
     }
 
     val haveThisMemes = mutableListOf<Mem>()
+    val haveThisMemesThird = mutableListOf<String>()
 
     var chat = Chat("", arrayOf(), arrayOf())
     var messages = mutableListOf<Message>()
     var notNewFrame = false
+    var nameCompany = ""
+
+    var keyCaesar = 3
+    var keyViginer = "Котлин"
+    val mutableLiveDataKeyCaesar = MutableLiveData(keyCaesar)
+    val mutableLiveDataKeyViginer = MutableLiveData(keyViginer)
 }
