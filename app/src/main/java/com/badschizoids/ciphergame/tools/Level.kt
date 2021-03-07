@@ -5,5 +5,6 @@ enum class Level {
     SECOND,
     THIRD,
     FOURTH,
+    LAST,
     NO
 }

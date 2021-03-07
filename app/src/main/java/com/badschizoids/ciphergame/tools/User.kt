@@ -38,4 +38,5 @@ object User {
     var keyViginer = "Котлин"
     val mutableLiveDataKeyCaesar = MutableLiveData(keyCaesar)
     val mutableLiveDataKeyViginer = MutableLiveData(keyViginer)
+    var answer = 0
 }

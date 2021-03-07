@@ -1,5 +1,6 @@
 package com.badschizoids.ciphergame.chat
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -9,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -80,6 +82,7 @@ class ChatActionFragment: BaseFragment() {
                 Level.SECOND.name -> Level.SECOND
                 Level.THIRD.name -> Level.THIRD
                 Level.FOURTH.name -> Level.FOURTH
+                Level.LAST.name -> Level.LAST
                 else -> Level.NO
             }
         }
@@ -97,8 +100,8 @@ class ChatActionFragment: BaseFragment() {
         val decryptXorButton : MaterialButton = view.findViewById(R.id.byte_button)
         messageTextView = view.findViewById(R.id.message)
         generateEncryptMessage = GenerateEncryptMessage(requireContext())
-        when(level){
-            Level.FIRST ->{
+        when(level) {
+            Level.FIRST -> {
                 val ciphers = arrayOf(ReverseCipher(), SpinnerCipher())
                 if (Random.nextBoolean())
                     ciphers.reverse()
@@ -127,7 +130,7 @@ class ChatActionFragment: BaseFragment() {
                     }
                 }
             }
-            Level.SECOND ->{
+            Level.SECOND -> {
                 val ciphers = arrayOf(CaesarCipher(5), ViginerCipher("Мем"))
                 if (Random.nextBoolean())
                     ciphers.reverse()
@@ -138,7 +141,7 @@ class ChatActionFragment: BaseFragment() {
                 setMessage(generateMessage(string, ciphers))
                 timer.start()
                 mutableLiveData.observe(viewLifecycleOwner, Observer {
-                    if (it){
+                    if (it) {
                         AlertsDialog().createLoseAlertDialog(requireContext()).show()
                         launch {
                             delay(500)
@@ -147,7 +150,7 @@ class ChatActionFragment: BaseFragment() {
                     }
                 })
             }
-            Level.THIRD ->{
+            Level.THIRD -> {
                 timerThird.start()
                 val ciphers = arrayOf(CaesarCipher(4), ViginerCipher("Сахар"))
                 setButtonInActive(decryptReverseButton)
@@ -158,8 +161,8 @@ class ChatActionFragment: BaseFragment() {
                     currentMessage = newStrings.random()
                     setMessage(generateMessage(currentMessage, ciphers))
                     mutableLiveDataThird.observe(viewLifecycleOwner, Observer {
-                        if (it){
-                            Toast.makeText(requireContext(),"Стоит читать диалоги :)\n " +
+                        if (it) {
+                            Toast.makeText(requireContext(), "Стоит читать диалоги :)\n " +
                                     "Ключ для шифра Цезаря - 4, для Вижинера - Сахар",
                                     Toast.LENGTH_LONG).show()
                             timer.start()
@@ -168,20 +171,40 @@ class ChatActionFragment: BaseFragment() {
                     })
                 }
             }
-            Level.FOURTH ->{
-                val ciphers = arrayOf(ReverseCipher(), SpinnerCipher(), ByteCipher())
+            Level.FOURTH -> {
                 setButtonInActive(decryptViginerButton)
                 setButtonInActive(decryptCaeserButton)
                 setButtonInActive(decryptXorButton)
-                setMessage(generateMessage(last, ciphers))
-                timer.start()
-                mutableLiveData.observe(viewLifecycleOwner, Observer {
-                    if (it){
-                        AlertsDialog().createLoseAlertDialog(requireContext()).show()
-                        launch {
-                            delay(500)
-                            findNavController().navigate(R.id.action_chatActionFragment_to_chatFragment)
-                        }
+                setButtonInActive(decryptReverseButton)
+                setButtonInActive(decryptSpinnerButton)
+                setMessage(generateMessage(last, arrayOf()))
+                timerThird.start()
+                mutableLiveDataThird.observe(viewLifecycleOwner, Observer {
+                    if (it) {
+                        Toast.makeText(requireContext(), "Как решите, просто вернитесь назад",
+                                Toast.LENGTH_LONG).show()
+                    }
+                })
+            }
+            Level.LAST -> {
+                setButtonInActive(decryptViginerButton)
+                setButtonInActive(decryptCaeserButton)
+                setButtonInActive(decryptXorButton)
+                setButtonInActive(decryptReverseButton)
+                setButtonInActive(decryptSpinnerButton)
+                val mut = MutableLiveData(0)
+                val viewG = layoutInflater.inflate(R.layout.ket_caesar, null)
+                AlertDialog.Builder(requireContext())
+                        .setView(viewG)
+                        .setPositiveButton("Завершить") { dialog, which ->
+                            mut.postValue(viewG.findViewById<EditText>(R.id.email).text.toString().toInt())
+                            dialog.cancel()
+                        }.create().show()
+                mut.observe(viewLifecycleOwner, {
+                    if (it != 0){
+                        val bundle = Bundle()
+                        bundle.putInt("finish", it)
+                        findNavController().navigate(R.id.action_chatActionFragment_to_finishFragment, bundle)
                     }
                 })
             }

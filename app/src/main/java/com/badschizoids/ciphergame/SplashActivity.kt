@@ -36,15 +36,17 @@ class SplashActivity : AppCompatActivity() {
             while (counter < word.length) {
                 delay(65)
                 textView.setText(textView.text.toString() + word[counter])
-                if (counter == word.length-1)
-                    button.visibility = View.VISIBLE
+                if (counter == word.length-1){
+                    val mediaPlayer: MediaPlayer = MediaPlayer
+                            .create(this@SplashActivity, R.raw.ambient)
+                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    mediaPlayer.start()
+                }
                 counter++
             }
         }
-        val mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.sound1)
         button.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-            mediaPlayer.start()
+
         }
     }
 }
