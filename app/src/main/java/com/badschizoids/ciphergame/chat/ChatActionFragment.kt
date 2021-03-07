@@ -20,13 +20,16 @@ import com.badschizoids.ciphergame.ciphers.CaesarCipher
 import com.badschizoids.ciphergame.ciphers.ReverseCipher
 import com.badschizoids.ciphergame.ciphers.ViginerCipher
 import com.badschizoids.ciphergame.tools.AlertsDialog
+import com.badschizoids.ciphergame.tools.BaseFragment
 import com.badschizoids.ciphergame.tools.User
 import com.badschizoids.ciphergame.ui.mainaction.MainActionViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.prefs.Preferences
 
-class ChatActionFragment: Fragment() {
+class ChatActionFragment: BaseFragment() {
     lateinit var generateEncryptMessage : GenerateEncryptMessage
     val viginerCipher = ViginerCipher()
     val caeserCipher = CaesarCipher()
@@ -82,8 +85,14 @@ class ChatActionFragment: Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (mainActionViewModel.messageAnswer == s.toString()) {
-                    AlertsDialog().createSussesAlertDialog(requireContext()).show()
-                    findNavController().navigate(R.id.action_chatActionFragment_self)
+                    launch {
+                        delay(1000)
+                        AlertsDialog().createSussesAlertDialog(requireContext()).show()
+                        if (User.haveThisMemes.size == User.mutableLiveData.value?.size)
+                            findNavController().navigate(R.id.action_chatActionFragment_to_chatFragment)
+                        else
+                            findNavController().navigate(R.id.action_chatActionFragment_self)
+                    }
                 }
             }
         })

@@ -7,7 +7,7 @@ class Chat(
 ){
     fun getPositionInUserString(string: String): Int {
         var position = -1
-        for (i in string.indices){
+        for (i in stringsUser.indices){
             if (stringsUser[i].message == string){
                 position = i
                 break
@@ -19,5 +19,10 @@ class Chat(
         val nameStart = "Вступление"
         val nameGetHelps = "Получение справок"
         val nameFisrtWork = "Первая работа"
+        val nameSecondWork = "Важное испытание"
+        val nameThirdWork = "Александр зол"
+        val nameFourtyWork = "Александр против"
+        val nameFifthWork = "Кто прав, а кто Тот-самый-гражданин?"
+        val nameLastWork = "А кто сказал, что всё будет хорошо?"
     }
 }

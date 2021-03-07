@@ -27,4 +27,8 @@ object User {
     }
 
     val haveThisMemes = mutableListOf<Mem>()
+
+    var chat = Chat("", arrayOf(), arrayOf())
+    var messages = mutableListOf<Message>()
+    var notNewFrame = false
 }
