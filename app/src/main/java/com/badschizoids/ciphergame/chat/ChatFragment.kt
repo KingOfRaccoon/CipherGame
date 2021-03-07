@@ -67,7 +67,10 @@ class ChatFragment: BaseFragment() {
         val mutableLiveData = MutableLiveData(messageAdapter)
         val dataCompany = MemberData(name, getRandomColor())
         val button = view.findViewById<MaterialButton>(R.id.send)
-        button.text = chat.stringsUser[position+1].message
+        if (position+1 < chat.stringsUser.size)
+            button.text = chat.stringsUser[position+1].message
+        else
+            button.text = requireContext().resources.getString(R.string.next_chat)
         button.setOnClickListener {
             button.text = ""
             position++
@@ -139,23 +142,61 @@ class ChatFragment: BaseFragment() {
         val error = PreferenceManager.getDefaultSharedPreferences(requireContext())
                 .getString("checkHelp", "")
         val bundle = Bundle()
+        var nameCompany = ""
+        var nameNewChat = ""
+        var userStrings = ""
+        var companyStrings = ""
         when (nameChat) {
             Chat.nameStart -> {
-                bundle.putString(nameCompanyTag, StoryTail.nameCompanyGetHelpsAndFirstWork)
-                bundle.putString(nameTag, Chat.nameGetHelps)
-                bundle.putString(stringsUserTag, StoryTail.getHelpsUser)
-                bundle.putString(stringsCompanyTag, StoryTail.getHelpsCompany)
+                nameCompany = StoryTail.nameCompanyGetHelpsAndFirstWork
+                nameNewChat = Chat.nameGetHelps
+                userStrings = StoryTail.getHelpsUser
+                companyStrings = StoryTail.getHelpsCompany
             }
             Chat.nameGetHelps -> {
                 if (error != "") {
-                    bundle.putString(nameCompanyTag, StoryTail.nameCompanyGetHelpsAndFirstWork)
-                    bundle.putString(nameTag, Chat.nameFisrtWork)
-                    bundle.putString(stringsUserTag, StoryTail.firstWorkUser)
-                    bundle.putString(stringsCompanyTag, StoryTail.firstWorkCompany)
+                    nameCompany = StoryTail.nameCompanyGetHelpsAndFirstWork
+                    nameNewChat = Chat.nameFisrtWork
+                    userStrings = StoryTail.firstWorkUser
+                    companyStrings = StoryTail.firstWorkCompany
                 } else
                     Toast.makeText(requireContext(), HelpFragment.error, Toast.LENGTH_LONG).show()
             }
+            Chat.nameFisrtWork ->{
+                nameCompany = StoryTail.nameCompanyStart
+                nameNewChat = Chat.nameSecondWork
+                userStrings = StoryTail.secondWorkUser
+                companyStrings = StoryTail.secondWorkCompany
+            }
+            Chat.nameSecondWork ->{
+                nameCompany = StoryTail.nameCompanyGetHelpsAndFirstWork
+                nameNewChat = Chat.nameThirdWork
+                userStrings = StoryTail.thirdWorkUser
+                companyStrings = StoryTail.thirdWorkCompany
+            }
+            Chat.nameThirdWork -> {
+                nameCompany = StoryTail.nameCompanyStart
+                nameNewChat = Chat.nameFourtyWork
+                userStrings = StoryTail.fourthWorkUser
+                companyStrings = StoryTail.fourthWorkCompany
+            }
+            Chat.nameFourtyWork ->{
+                nameCompany = StoryTail.nameCompanyGetHelpsAndFirstWork
+                nameNewChat = Chat.nameFifthWork
+                userStrings = StoryTail.fifthWorkUser
+                companyStrings = StoryTail.fifthWorkCompany
+            }
+            Chat.nameFifthWork ->{
+                nameCompany = StoryTail.nameCompanyGetHelpsAndFirstWork
+                nameNewChat = Chat.nameLastWork
+                userStrings = StoryTail.lastWorkUser
+                companyStrings = StoryTail.lastWorkCompany
+            }
         }
+        bundle.putString(nameCompanyTag, nameCompany)
+        bundle.putString(nameTag, nameNewChat)
+        bundle.putString(stringsUserTag, userStrings)
+        bundle.putString(stringsCompanyTag, companyStrings)
 //        if (error == ""){
 //
 //        }

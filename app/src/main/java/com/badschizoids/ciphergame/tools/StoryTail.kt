@@ -48,7 +48,7 @@ class StoryTail {
                     " также будет поднят вопрос о вашем увольнении.")
         )
         private val stringsUserSecondWork = arrayOf(
-            StoryMessage("К сожалению у меня не получилось  дешифровать информацию.")
+            StoryMessage("К сожалению у меня не получилось дешифровать информацию.")
         )
         private val stringsMentorCameBack = arrayOf(
             StoryMessage("Только вернулся с командировки, как дела стажер?"),
@@ -59,7 +59,7 @@ class StoryTail {
                     " Сегодня узнаю уволят или нет ;(")
         )
         private val stringsMentorCompany = arrayOf(
-            StoryMessage("Что за новости?!"),
+//            StoryMessage("Что за новости?!"),
             StoryMessage("Назовите хотя бы 1 причину увольнения моего стажера."),
             StoryMessage("Перешлите мне файл с этим шифром."),
             StoryMessage("Конечно, парень не смог бы дешифровать это," +
@@ -105,10 +105,21 @@ class StoryTail {
         val startComapny = "startCompany"
         val getHelpsCompany = "getHelpsCompany"
         val firstWorkCompany = "firstWorkCompany"
+        val secondWorkCompany = "secondWorkCompany"
+        val thirdWorkCompany = "thirdWorkCompany"
+        val fourthWorkCompany = "fourthWorkCompany"
+        val fifthWorkCompany = "fifthWorkCompany"
+        val lastWorkCompany = "lastWorkCompany"
 
         val startUser = "startUser"
         val getHelpsUser = "getHelpsUser"
         val firstWorkUser = "firstWorkUser"
+        val secondWorkUser = "secondWorkUser"
+        val thirdWorkUser = "thirdWorkUser"
+        val fourthWorkUser = "fourthWorkUser"
+        val fifthWorkUser = "fifthWorkUser"
+        val lastWorkUser = "lastWorkUser"
+
 
         val nameCompanyStart = "Представитель компании"
         val nameCompanyGetHelpsAndFirstWork = "Александр"
@@ -117,13 +128,23 @@ class StoryTail {
         val stringsCompany = mapOf<String, Array<StoryMessage>>(
                 startComapny to stringsCompanyStart,
                 getHelpsCompany to stringsCompanyGetHelps,
-                firstWorkCompany to stringsCompanyFirstWork
+                firstWorkCompany to stringsCompanyFirstWork,
+                secondWorkCompany to stringsCompanySecondWork,
+                thirdWorkCompany to stringsMentorCameBack,
+                fourthWorkCompany to stringsCompanyMentor,
+                fifthWorkCompany to stringsMentorThirdLevel,
+                lastWorkCompany to stringsMentorFourthLevel
         )
 
         val stringsUser = mapOf<String, Array<StoryMessage>>(
                 startUser to stringsUserStart,
                 getHelpsUser to stringsUserGetHelps,
-                firstWorkUser to stringsUserFirstWork
+                firstWorkUser to stringsUserFirstWork,
+                secondWorkUser to stringsUserSecondWork,
+                thirdWorkUser to stringsUserAboutDismissal,
+                fourthWorkUser to stringsMentorCompany,
+                fifthWorkUser to arrayOf(),
+                lastWorkUser to stringsUserFourthLevel
         )
     }
 }
