@@ -194,16 +194,24 @@ class ChatActionFragment: BaseFragment() {
                 setButtonInActive(decryptSpinnerButton)
                 val mut = MutableLiveData(0)
                 val viewG = layoutInflater.inflate(R.layout.ket_caesar, null)
+                var abs = ""
                 AlertDialog.Builder(requireContext())
                         .setView(viewG)
-                        .setPositiveButton("Завершить") { dialog, which ->
+                        .setPositiveButton("Цезарь") { dialog, which ->
+                            abs = "Цезарь"
                             mut.postValue(viewG.findViewById<EditText>(R.id.email).text.toString().toInt())
                             dialog.cancel()
+
+                        }.setNegativeButton("Вижинер") { dialog, which ->
+                        abs = "Вижинер"
+                        mut.postValue(viewG.findViewById<EditText>(R.id.email).text.toString().toInt())
+                        dialog.cancel()
                         }.create().show()
                 mut.observe(viewLifecycleOwner, {
                     if (it != 0){
                         val bundle = Bundle()
                         bundle.putInt("finish", it)
+                        bundle.putString("name", abs)
                         findNavController().navigate(R.id.action_chatActionFragment_to_finishFragment, bundle)
                     }
                 })
