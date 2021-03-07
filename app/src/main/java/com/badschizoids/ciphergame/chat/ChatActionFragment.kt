@@ -1,6 +1,7 @@
 package com.badschizoids.ciphergame.chat
 
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.Editable
@@ -8,6 +9,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +28,7 @@ import com.badschizoids.ciphergame.tools.User
 import com.badschizoids.ciphergame.ui.mainaction.MainActionViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
+import com.google.api.Context
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.prefs.Preferences
@@ -46,29 +49,32 @@ class ChatActionFragment: BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null){
-            when(arguments?.getString("level")){
-                Level.NO.name -> level = Level.NO
-                Level.FIRST.name -> level = Level.FIRST
-                Level.SECOND.name -> level = Level.SECOND
-                Level.THIRD.name -> level = Level.THIRD
-                Level.FOURTH.name -> level = Level.FOURTH
-                else -> level = Level.NO
+            level = when(arguments?.getString("level")){
+                Level.NO.name -> Level.NO
+                Level.FIRST.name -> Level.FIRST
+                Level.SECOND.name -> Level.SECOND
+                Level.THIRD.name -> Level.THIRD
+                Level.FOURTH.name -> Level.FOURTH
+                else -> Level.NO
             }
         }
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chat_action, container, false)
         (requireActivity() as MainActivity).toWork()
         val decryptViginerButton : MaterialButton = view.findViewById(R.id.button_viginer)
         val decryptCaeserButton : MaterialButton = view.findViewById(R.id.button_ceaser)
         val decryptReverseButton : MaterialButton = view.findViewById(R.id.button_reverse)
+        messageTextView = view.findViewById(R.id.message)
+        generateEncryptMessage = GenerateEncryptMessage(requireContext())
         when(level){
             Level.FIRST ->{
+                setButtonInActive(decryptViginerButton)
+                setButtonInActive(decryptCaeserButton)
                 mainActionViewModel.init()
-                generateEncryptMessage = GenerateEncryptMessage(requireContext())
-                messageTextView = view.findViewById(R.id.message)
                 User.mutableLiveData.observe(viewLifecycleOwner) {
                     if (it.isNotEmpty()) {
                         if (User.haveThisMemes.size != it.size) {
@@ -111,8 +117,11 @@ class ChatActionFragment: BaseFragment() {
                         AlertsDialog().createSussesAlertDialog(requireContext()).show()
                         if (User.haveThisMemes.size == User.mutableLiveData.value?.size)
                             findNavController().navigate(R.id.action_chatActionFragment_to_chatFragment)
-                        else
-                            findNavController().navigate(R.id.action_chatActionFragment_self)
+                        else{
+                            val bundle = Bundle()
+                            bundle.putString("level", level.name)
+                            findNavController().navigate(R.id.action_chatActionFragment_self, bundle)
+                        }
                     }
                 }
             }
@@ -139,4 +148,10 @@ class ChatActionFragment: BaseFragment() {
         }
     }
 
+    fun setButtonInActive(materialButton: MaterialButton){
+        materialButton.isClickable = false
+        materialButton.text = "?"
+        materialButton.setTextColor(Color.WHITE)
+        materialButton.setBackgroundColor(Color.BLACK)
+    }
 }

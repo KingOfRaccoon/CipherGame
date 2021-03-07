@@ -208,10 +208,6 @@ class ChatFragment: BaseFragment() {
         bundle.putString(nameTag, nameNewChat)
         bundle.putString(stringsUserTag, userStrings)
         bundle.putString(stringsCompanyTag, companyStrings)
-//        if (error == ""){
-//
-//        }
-//        Log.e("data", bundle.toString())
         User.notNewFrame = false
         if (!bundle.isEmpty)
             findNavController().navigate(R.id.action_chatFragment_self, bundle)
@@ -233,7 +229,7 @@ class ChatFragment: BaseFragment() {
         val nameChat = "nameChat"
         val lastMessage = "lastMessage"
     }
-//    fun goToLastMessage
+
     fun getLastPositionUser(): Int {
         var position = -1
         for (i in messageAdapter.messages.size-1 downTo 0 step 1){
@@ -243,17 +239,6 @@ class ChatFragment: BaseFragment() {
             }
         }
     return position/2
-    }
-
-    fun getLastPositionCompany():Int{
-        var position = -1
-        for (i in messageAdapter.messages.size-1 downTo 0 step 1){
-            if (messageAdapter.messages[i].memberData.name != "Игрок") {
-                position = i
-                break
-            }
-        }
-        return position
     }
 
     fun checkUserMessage() = messageAdapter.messages.last().memberData.name == "Игрок"
