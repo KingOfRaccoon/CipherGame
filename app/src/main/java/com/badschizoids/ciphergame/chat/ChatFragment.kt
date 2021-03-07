@@ -113,7 +113,7 @@ class ChatFragment: BaseFragment() {
         mutableLiveData.observe(viewLifecycleOwner) {
             var position = -1
             if (!it.isEmpty)
-                position = (messageAdapter.messages.size-1)/2
+                position = getLastPositionUser()-1
             launch {
                 delay(1000)
                 if (position + 1 < chat.stringsCompany.size) {
@@ -240,5 +240,16 @@ class ChatFragment: BaseFragment() {
             }
         }
     return position
+    }
+
+    fun getLastPositionCompany():Int{
+        var position = -1
+        for (i in messageAdapter.messages.size-1 downTo 0 step 1){
+            if (messageAdapter.messages[i].memberData.name != "Игрок") {
+                position = i
+                break
+            }
+        }
+        return position
     }
 }
